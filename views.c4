@@ -1,0 +1,17 @@
+
+views {
+    view index {
+        title 'System landscape'
+
+        include *, softwareSystem
+    }
+
+    view member {
+        title 'System Containers'
+        
+        include 
+            softwareSystem,
+            * -> softwareSystem,
+            softwareSystem.*,
+    }
+}

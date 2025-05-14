@@ -1,0 +1,22 @@
+specification {
+    element actor {
+        notation "Member"
+        style {
+            shape person
+        }
+    }
+
+    element softwareSystem {
+        notation "System"
+        style {
+            shape rectangle
+        }
+    }
+
+    element database {
+        notation "Database"
+        style {
+            shape storage
+        }
+    }
+}

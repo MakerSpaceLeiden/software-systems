@@ -1,0 +1,157 @@
+model {
+    member = actor {
+        title "Member"
+        description 'A member of the Makerspace'
+    }
+
+    anonymous = actor {
+        title "Anonymous"
+        description 'An unauthenticated user with no known identity'
+        style {
+            color muted
+        }
+    }
+
+    trustee = actor {
+        title "Trustee"
+        description 'Adminstrator of the Makerspace'
+        style {
+            color green
+        }
+    }
+
+
+
+    softwareSystem = softwareSystem {
+        title "Software System"
+
+        wordpress = softwareSystem {
+            title "Marketing site"
+            technology 'Wordpress, PHP'
+
+            style {
+                shape browser
+            }
+        }
+
+        wordpressData = database {
+            title "Wordpress Data"
+            description 'Database for Wordpress'
+        }
+
+        apache -> wordpress "Routes requests"
+        apache -> wiki "Routes requests"
+        apache -> crm "Routes requests"
+
+        wordpress -> wordpressData "Reads/writes"
+
+        wiki = softwareSystem {
+            title "Wiki"
+            technology 'MediaWiki, PHP'
+
+            style {
+                shape browser
+            }
+        }
+
+        wikiDb = database {
+            title "Wiki Data"
+            technology 'MySQL'
+        }
+
+        mysql = database {
+            title "MySQL"
+            description 'Datastore for Wiki/CRM'
+        }
+
+        redis = database {
+            title "Redis"
+        }
+
+        crm = softwareSystem {
+            title "CRM UI"
+            technology "Django"
+            description 'Customer Relationship Management'
+            style {
+                shape browser
+            }
+        }
+
+        crmApi = softwareSystem {
+            title "CRM API"
+            technology "Django REST Framework"
+        }
+
+        apache = softwareSystem {
+            title "Server and Reverse Proxy"
+            technology 'Apache'
+        }
+
+        nodeRed = softwareSystem {
+            title "NodeRed"
+            description 'Flow control for the Makerspace'
+        }
+
+        aggregator = softwareSystem {
+            title "Aggregator"
+            technology 'Python'
+            description 'Periodically collates data from the Makerspace'
+        }
+
+        mqttBroker = softwareSystem {
+            title "MQTT Broker"
+            technology 'Mosquitto'
+        }
+
+        accessMaster = softwareSystem {
+            title "Access Master"
+            technology 'Python'
+            description 'Master access control system'
+        }
+
+        crm -> mysql "Reads/writes"
+        crmApi -> mysql "Reads/writes"
+        wiki -> wikiDb "Reads/writes"
+
+        // Relationships between software systems
+        crm -> emailSystem "Create/delete contacts"
+        aggregator -> crm "HTTP API calls"
+        aggregator -> redis "Reads/writes"
+        aggregator -> mqttBroker "Reads/writes"
+
+        accessMaster -> crmApi "HTTP API calls"
+        accessMaster -> mqttBroker "Reads"
+
+        nodeRed -> mysql "Reads"
+        nodeRed -> crmApi "HTTP API calls"
+
+        crm -> nodeRed "Embedded via iframe"
+    }
+
+    emailSystem = softwareSystem {
+        title "Email Lists"
+        description 'Sympa SaaS'
+
+        style {
+            color muted
+        }
+    }
+
+    // Relationships between actors and systems
+    anonymous -> softwareSystem "Uses"
+    trustee -> softwareSystem "Uses"
+    member -> softwareSystem "Uses"
+
+    // Anonymous
+    anonymous -> apache "Reads"
+    member -> apache "Read/Edit"
+    trustee -> apache "Read/Edit"
+
+    emailSystem -> trustee "Sends emails"
+    emailSystem -> member "Sends emails"
+
+    // Relationships between systems
+    // Relationships between containers
+
+
+}
