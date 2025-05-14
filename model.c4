@@ -20,8 +20,6 @@ model {
         }
     }
 
-
-
     softwareSystem = softwareSystem {
         title "Software System"
 
@@ -32,18 +30,20 @@ model {
             style {
                 shape browser
             }
+
+            -> wordpressDb "Reads/writes"
         }
 
-        wordpressData = database {
+
+        wordpressDb = database {
             title "Wordpress Data"
-            description 'Database for Wordpress'
+            technology 'MySQL'
         }
+       
 
         apache -> wordpress "Routes requests"
         apache -> wiki "Routes requests"
         apache -> crm "Routes requests"
-
-        wordpress -> wordpressData "Reads/writes"
 
         wiki = softwareSystem {
             title "Wiki"
@@ -70,6 +70,7 @@ model {
 
         crm = softwareSystem {
             title "CRM UI"
+            link https://github.com/MakerSpaceLeiden/makerspaceleiden-crm
             technology "Django"
             description 'Customer Relationship Management'
             style {
@@ -79,6 +80,7 @@ model {
 
         crmApi = softwareSystem {
             title "CRM API"
+            link https://github.com/MakerSpaceLeiden/makerspaceleiden-crm
             technology "Django REST Framework"
         }
 
@@ -94,6 +96,7 @@ model {
 
         aggregator = softwareSystem {
             title "Aggregator"
+            link https://github.com/MakerSpaceLeiden/aggregator
             technology 'Python'
             description 'Periodically collates data from the Makerspace'
         }
@@ -103,18 +106,39 @@ model {
             technology 'Mosquitto'
         }
 
+        isItUp = container {
+            title "Is It Up and email"
+            technology 'scripts'
+        }
+
+        isItUp -> mqttBroker "Validate health"
+
         accessMaster = softwareSystem {
             title "Access Master"
+            link https://github.com/MakerSpaceLeiden/AccesSystem/tree/master/Master
             technology 'Python'
             description 'Master access control system'
         }
+
+        mrtg = softwareSystem {
+            title "Multi Router Traffic Grapher"
+            technology 'Perl'
+            description 'Graphs monitoring data from the Makerspace'
+        }
+
+        wireguard = container {
+            title "Wireguard"
+            description "Tunnel to the Makerspace physical network"
+        }
+
+        // Relationships between software systems
 
         crm -> mysql "Reads/writes"
         crmApi -> mysql "Reads/writes"
         wiki -> wikiDb "Reads/writes"
 
-        // Relationships between software systems
         crm -> emailSystem "Create/delete contacts"
+        crm -> crmApi "HTTP API calls"
         aggregator -> crm "HTTP API calls"
         aggregator -> redis "Reads/writes"
         aggregator -> mqttBroker "Reads/writes"
@@ -126,6 +150,9 @@ model {
         nodeRed -> crmApi "HTTP API calls"
 
         crm -> nodeRed "Embedded via iframe"
+        crm -> mrtg "Embedded via iframe"
+        mrtg -> wireguard "Reads"
+
     }
 
     emailSystem = softwareSystem {
@@ -149,9 +176,4 @@ model {
 
     emailSystem -> trustee "Sends emails"
     emailSystem -> member "Sends emails"
-
-    // Relationships between systems
-    // Relationships between containers
-
-
 }

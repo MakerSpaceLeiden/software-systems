@@ -1,0 +1,62 @@
+deployment {
+    environment prod {
+        title "Production"
+
+        environment hetzner {
+            title "Hetzner"
+
+            environment vm {
+                title "Virtual Machine"
+
+                instanceOf softwareSystem.aggregator
+                instanceOf softwareSystem.apache
+                instanceOf softwareSystem.crm
+                instanceOf softwareSystem.crmApi
+                instanceOf softwareSystem.wiki
+                instanceOf softwareSystem.wikiDb
+                instanceOf softwareSystem.nodeRed
+                instanceOf softwareSystem.isItUp
+                instanceOf softwareSystem.mrtg
+                instanceOf softwareSystem.mysql
+                instanceOf softwareSystem.mqttBroker
+                instanceOf softwareSystem.redis
+                instanceOf softwareSystem.wireguard
+                instanceOf softwareSystem.accessMaster
+            }
+
+            environment webhosting {
+                title "Web Hosting"
+
+                instanceOf softwareSystem.wordpress
+                instanceOf softwareSystem.wordpressDb
+            }
+        }
+
+        environment space {
+            title "Makerspace Leiden"
+
+            machine tpLink {
+                title "TP-Link"
+                description "Router"
+            }
+            
+            machine raspberryPi {
+                title "Raspberry Pi Light Desktop Manager"
+            }
+        }
+    }
+}
+
+views {
+    deployment view production {
+        title 'Deployment View'
+        
+        include prod
+        include prod.hetzner
+        include prod.hetzner.vm
+        include prod.hetzner.vm.*
+        include prod.hetzner.webhosting.*
+        include prod.space
+        include prod.space.*
+    }
+}

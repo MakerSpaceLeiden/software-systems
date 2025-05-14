@@ -13,10 +13,21 @@ specification {
         }
     }
 
+    element container {
+        notation "Container"
+        style {
+            shape rectangle
+        }
+    }
+
     element database {
         notation "Database"
         style {
             shape storage
         }
     }
+
+    deploymentNode environment
+    deploymentNode location
+    deploymentNode machine 
 }
