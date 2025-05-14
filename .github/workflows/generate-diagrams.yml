@@ -1,0 +1,16 @@
+name: tests
+
+on: [push]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: export diagrams
+        uses: likec4/actions@v1
+        with:
+          export: png
+          path: src/likec4
+          output: out/images
+          use-dot-bin: 'true'      
