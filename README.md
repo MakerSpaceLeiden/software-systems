@@ -10,8 +10,10 @@ The C4 model was created to help build better mental models of their software ar
 
 It consists of four levels of abstraction:
 
-* Context: The big picture - showing how your system fits into the world around it
-* Containers: The high-level technical building blocks
+
+
+* Context: The highest level view showing your software system in its environment, including the people who use it and the other systems it interacts with. This answers the "what" and "why" questions and helps establish scope and boundaries.
+* Containers: Zooms into your software system to show the high-level technical building blocks. A container represents an application or data store that needs to be running for the overall system to work. Examples include web applications, mobile apps, databases, file systems, etc.
 * Components: The logical components within each container
 * Code: The implementation details
 
