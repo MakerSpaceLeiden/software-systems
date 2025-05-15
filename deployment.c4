@@ -38,10 +38,21 @@ deployment {
             machine tpLink {
                 title "TP-Link"
                 description "Router"
+
+                instanceOf homeAssistant
+
             }
             
             machine raspberryPi {
                 title "Raspberry Pi Light Desktop Manager"
+
+                instanceOf homeAssistantDashboard
+            }
+
+            machine firewall {
+                title "Firewall"
+
+                instanceOf firewall
             }
         }
     }
@@ -58,5 +69,7 @@ views {
         include prod.hetzner.webhosting.*
         include prod.space
         include prod.space.*
+        include prod.space.tpLink.*
+        include prod.space.raspberryPi.*
     }
 }

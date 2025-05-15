@@ -155,6 +155,31 @@ model {
 
     }
 
+    homeAssistant = softwareSystem {
+        title "Home Assistant"
+    }
+
+    homeAssistantDashboard = container {
+        title "Home Assistant Dashboard"
+    }
+
+    firewall = container {
+        title "Firewall"
+    }
+
+    acNode = container {
+        title "AC Node New"
+
+        -> crmApi "HTTP API calls"
+        -> mqttBroker
+    }
+
+    acNodeOld = container {
+        title "AC Node Old"
+
+        -> mqttBroker 
+    }
+
     emailSystem = softwareSystem {
         title "Email Lists"
         description 'Sympa SaaS'
@@ -163,11 +188,16 @@ model {
             color muted
         }
     }
+    
 
     // Relationships between actors and systems
     anonymous -> softwareSystem "Uses"
     trustee -> softwareSystem "Uses"
     member -> softwareSystem "Uses"
+
+    // Relationships between containers
+    homeAssistant -> mqttBroker "Reads"
+    homeAssistantDashboard -> homeAssistant 
 
     // Anonymous
     anonymous -> apache "Reads"
