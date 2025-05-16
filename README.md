@@ -21,14 +21,22 @@ Note: For our purposes we will be focusing on the Context and Containers levels.
 
 The files here are using the likec4.dev implementation of the C4 model language. You can find the source code for the implementation [here](https://github.com/LikeC4/likec4).
 
-## Generating Diagrams
+## Generating Output Diagrams
 
 To generate diagrams from the C4 model, you can use the [likec4](https://github.com/LikeC4/likec4) tool. This tool is a command-line tool that can be used to generate diagrams from C4 model files.
 
-To generate diagrams in an `./assets` directory, you can use the following command:
+### Generate static diagrams
+
+To generate static diagrams in an `./assets` directory, you can use the following command:
 
 ```
 npx likec4 export png -o ./assets
+```
+
+### Generating Interactive Diagrams
+
+```
+npx likec4 build -o ./dist
 ```
 
 
