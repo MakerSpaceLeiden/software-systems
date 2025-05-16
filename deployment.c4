@@ -39,20 +39,24 @@ deployment {
                 title "TP-Link"
                 description "Router"
 
-                instanceOf homeAssistant
+                instanceOf softwareSystem.homeAssistant
 
             }
             
             machine raspberryPi {
                 title "Raspberry Pi Light Desktop Manager"
 
-                instanceOf homeAssistantDashboard
+                instanceOf softwareSystem.homeAssistantDashboard
             }
 
             machine firewall {
                 title "Firewall"
 
-                instanceOf firewall
+                instanceOf softwareSystem.firewall
+            }
+
+            machine paymentDevice {
+                instanceOf softwareSystem.acNode
             }
         }
     }
@@ -61,6 +65,7 @@ deployment {
 views {
     deployment view production {
         title 'Deployment View'
+        description 'Mapping software containers onto physical hardware'
         
         include prod
         include prod.hetzner
@@ -71,5 +76,6 @@ views {
         include prod.space.*
         include prod.space.tpLink.*
         include prod.space.raspberryPi.*
+        include prod.space.acNode
     }
 }

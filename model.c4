@@ -23,6 +23,10 @@ model {
     softwareSystem = softwareSystem {
         title "Software System"
 
+        style {
+            opacity 25%
+        }
+
         wordpress = softwareSystem {
             title "Marketing site"
             technology 'Wordpress, PHP'
@@ -131,6 +135,31 @@ model {
             description "Tunnel to the Makerspace physical network"
         }
 
+        homeAssistant = container {
+            title "Home Assistant"
+        }
+
+        homeAssistantDashboard = container {
+            title "Home Assistant Dashboard"
+        }
+
+        firewall = container {
+            title "Firewall"
+        }
+
+        acNode = container {
+            title "AC Node New"
+
+            -> crmApi "HTTP API calls"
+            -> mqttBroker
+        }
+
+        acNodeOld = container {
+            title "AC Node Old"
+
+            -> mqttBroker 
+        }
+
         // Relationships between software systems
 
         crm -> mysql "Reads/writes"
@@ -155,30 +184,7 @@ model {
 
     }
 
-    homeAssistant = container {
-        title "Home Assistant"
-    }
-
-    homeAssistantDashboard = container {
-        title "Home Assistant Dashboard"
-    }
-
-    firewall = container {
-        title "Firewall"
-    }
-
-    acNode = container {
-        title "AC Node New"
-
-        -> crmApi "HTTP API calls"
-        -> mqttBroker
-    }
-
-    acNodeOld = container {
-        title "AC Node Old"
-
-        -> mqttBroker 
-    }
+    
 
     emailSystem = softwareSystem {
         title "Email Lists"
