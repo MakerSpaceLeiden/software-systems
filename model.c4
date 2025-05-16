@@ -155,7 +155,7 @@ model {
 
     }
 
-    homeAssistant = softwareSystem {
+    homeAssistant = container {
         title "Home Assistant"
     }
 
@@ -182,6 +182,7 @@ model {
 
     emailSystem = softwareSystem {
         title "Email Lists"
+        technology 'Sympa'
         description 'Sympa SaaS'
 
         style {
