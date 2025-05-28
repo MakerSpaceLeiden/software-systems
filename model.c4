@@ -168,7 +168,7 @@ model {
 
         crm -> emailSystem "Create/delete contacts"
         crm -> crmApi "HTTP API calls"
-        aggregator -> crm "HTTP API calls"
+        aggregator -> mysql "Reads/writes"
         aggregator -> redis "Reads/writes"
         aggregator -> mqttBroker "Reads/writes"
 
@@ -180,6 +180,7 @@ model {
 
         crm -> nodeRed "Embedded via iframe"
         crm -> mrtg "Embedded via iframe"
+        crm -> aggregator "Read data over HTTP endpoint"
         mrtg -> wireguard "Reads"
 
     }
