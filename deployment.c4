@@ -23,13 +23,6 @@ deployment {
                 instanceOf softwareSystem.wireguard
                 instanceOf softwareSystem.accessMaster
             }
-
-            environment webhosting {
-                title "Web Hosting"
-
-                instanceOf softwareSystem.wordpress
-                instanceOf softwareSystem.wordpressDb
-            }
         }
 
         environment space {
@@ -71,7 +64,6 @@ views {
         include prod.hetzner
         include prod.hetzner.vm
         include prod.hetzner.vm.*
-        include prod.hetzner.webhosting.*
         include prod.space
         include prod.space.*
         include prod.space.tpLink.*

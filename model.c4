@@ -27,25 +27,6 @@ model {
             opacity 25%
         }
 
-        wordpress = softwareSystem {
-            title "Marketing site"
-            technology 'Wordpress, PHP'
-
-            style {
-                shape browser
-            }
-
-            -> wordpressDb "Reads/writes"
-        }
-
-
-        wordpressDb = database {
-            title "Wordpress Data"
-            technology 'MySQL'
-        }
-       
-
-        apache -> wordpress "Routes requests"
         apache -> wiki "Routes requests"
         apache -> crm "Routes requests"
 
@@ -75,7 +56,7 @@ model {
         crm = softwareSystem {
             title "CRM UI"
             link https://github.com/MakerSpaceLeiden/makerspaceleiden-crm
-            technology "Django"
+            technology "Django WSGI"
             description 'Customer Relationship Management'
             style {
                 shape browser
