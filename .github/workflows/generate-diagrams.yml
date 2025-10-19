@@ -1,0 +1,42 @@
+name: Generate Diagrams
+on:
+  push:
+  workflow_dispatch:  # Allow manual trigger
+jobs:
+  generate-sbom:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Generate Diagrams
+        uses: likec4/actions@v1
+        with: 
+          export: png
+          action: export
+          output: assets
+
+      - name: Check for changes
+        id: verify-changed-files
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit changes
+        if: steps.verify-changed-files.outputs.changed == 'true'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "docs(🤖): update generated diagrams
+
+          Automated diagram generation triggered by workflow.
+          - Updated diagram files in assets/
+          - Generated on: ${{ github.run_id }}"
+          git push
