@@ -3,7 +3,7 @@ on:
   push:
   workflow_dispatch:  # Allow manual trigger
 jobs:
-  generate-sbom:
+  generate-c4-diagrams:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
