@@ -152,6 +152,7 @@ model {
         aggregator -> mysql "Reads/writes"
         aggregator -> redis "Reads/writes"
         aggregator -> mqttBroker "Reads/writes"
+        aggregator -> crmApi "POST HTTP API calls"
 
         accessMaster -> crmApi "HTTP API calls"
         accessMaster -> mqttBroker "Reads"
