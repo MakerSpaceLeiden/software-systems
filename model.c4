@@ -49,6 +49,32 @@ model {
             description 'Datastore for Wiki/CRM'
         }
 
+        nextcloud = softwareSystem {
+            title "Nextcloud Web App"
+            link https://nextcloud.com/
+            technology 'PHP'
+            description 'File sharing'
+            style {
+                shape browser
+            }
+        }
+
+        nextcloudDatabase = database {
+            title "Nextcloud Data"
+            technology 'MySQL'
+        }
+
+        nextcloudFiles = softwareSystem {
+            title "Nextcloud Files"
+            technology 'Server Filesystem'
+        }
+
+        apache -> nextcloud "Reads/writes"
+        apache -> nextcloud "Reads/writes"
+        nextcloud -> nextcloudDatabase "Reads/writes"
+        nextcloud -> nextcloudFiles "Reads/writes"
+        nextcloud -> crmApi "Auth/Authz checks"
+
         redis = database {
             title "Redis"
         }
