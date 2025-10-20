@@ -22,6 +22,9 @@ deployment {
                 instanceOf softwareSystem.redis
                 instanceOf softwareSystem.wireguard
                 instanceOf softwareSystem.accessMaster
+                instanceOf softwareSystem.nextcloud
+                instanceOf softwareSystem.nextcloudDatabase
+                instanceOf softwareSystem.nextcloudFiles
             }
         }
 
