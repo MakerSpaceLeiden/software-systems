@@ -168,6 +168,16 @@ model {
             -> mqttBroker 
         }
 
+        webhook = softwareSystem {
+            title "Webhook"
+            link https://github.com/adnanh/webhook
+            technology 'golang'
+            description 'Webhooks for the Makerspace'
+        }
+
+        apache -> webhook "Routes requests"
+        webhook -> crm "Invokes deployment scripts"
+
         // Relationships between software systems
 
         crm -> mysql "Reads/writes"
