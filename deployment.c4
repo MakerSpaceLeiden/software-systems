@@ -6,7 +6,7 @@ deployment {
             title "Hetzner"
 
             environment vm {
-                title "Virtual Machine"
+                title "Primary Server"
 
                 instanceOf softwareSystem.aggregator
                 instanceOf softwareSystem.apache
@@ -22,9 +22,16 @@ deployment {
                 instanceOf softwareSystem.redis
                 instanceOf softwareSystem.wireguard
                 instanceOf softwareSystem.accessMaster
+                instanceOf forgejo
+            }
+
+            environment vm2 {
+                title "Secondary Server"
+
                 instanceOf softwareSystem.nextcloud
                 instanceOf softwareSystem.nextcloudDatabase
                 instanceOf softwareSystem.nextcloudFiles
+                instanceOf forgejoRunner
             }
         }
 
@@ -67,6 +74,8 @@ views {
         include prod.hetzner
         include prod.hetzner.vm
         include prod.hetzner.vm.*
+        include prod.hetzner.vm2
+        include prod.hetzner.vm2.*
         include prod.space
         include prod.space.*
         include prod.space.tpLink.*

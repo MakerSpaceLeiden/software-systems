@@ -69,6 +69,7 @@ model {
             technology 'Server Filesystem'
         }
 
+        apache -> forgejo "Routes requests"
         apache -> nextcloud "Reads/writes"
         apache -> nextcloud "Reads/writes"
         nextcloud -> nextcloudDatabase "Reads/writes"
@@ -193,8 +194,21 @@ model {
 
     }
 
-    
+    forgejo = softwareSystem {
+        title "Forgejo"
+        link https://codeberg.org/forgejo/forgejo
+        technology 'golang'
+    }
 
+    forgejoRunner = softwareSystem {
+        title "Forgejo Runner"
+        link https://code.forgejo.org/forgejo/runner
+        technology 'golang'
+    }
+
+    forgejoRunner -> forgejo "Polls"
+    forgejoRunner -> forgejo "Write job status/output"
+    
     emailSystem = softwareSystem {
         title "Email Lists"
         technology 'Sympa'
